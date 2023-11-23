@@ -10,8 +10,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="aassets/img/logo 2.jpg" rel="icon">
+  <link href="assets/img/logo 2.jpg" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<!--<div th:replace="/layouts/header :: header"> </div>-->
+<div th:replace="/layouts/header :: header"> </div>
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -75,7 +75,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-<!--                    <h6 th:text="${count}"></h6>-->
+                    <h6 th:text="${receiptCount}"></h6>
                   </div>
                 </div>
               </div>
@@ -106,7 +106,7 @@
                     <i class="bi bi-person"></i>
                   </div>
                   <div class="ps-3">
-<!--                    <h6 th:text="${count}"></h6>-->
+                    <h6 th:text="${clientCount}"></h6>
                   </div>
                 </div>
               </div>
@@ -138,7 +138,7 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3">
-<!--                    <h6 th:text="${count}"></h6>-->
+                    <h6 th:text="${userCount}"></h6>
                   </div>
                 </div>
 
@@ -164,57 +164,38 @@
 
               <div class="card-body">
                 <h5 class="card-title">Liste des Transferts <span></span></h5>
-<!--                <div th:if="${message}">-->
-<!--                  <div class="alert alert-success alert-dismissible fade show" th:text="${message}" role="alert">-->
-<!--                    A simple success alert—check it out!-->
-<!--                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
-<!--                  </div>-->
-<!--                </div>-->
+                <div th:if="${message}">
+                  <div class="alert alert-success alert-dismissible fade show" th:text="${message}" role="alert">
+                    A simple success alert—check it out!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                </div>
                 <table class="table table-borderless datatable">
                   <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Code Swift</th>
-                    <th scope="col">Banque remettant</th>
-                    <th scope="col">compte remettant</th>
+                    <th scope="col">Code du transfert</th>
+                    <th scope="col">Remettant</th>
+                    <th scope="col">Bénéficiaire</th>
                     <th scope="col">Banque Bénéficiaire</th>
-                    <th scope="col">Compte Bénéficiaire</th>
+                    <th scope="col">IBAN</th>
+                    <th scope="col">Code Swift</th>
                     <th scope="col">Montant</th>
                     <th scope="col">Devise</th>
-                    <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>
-<!--                  <tr th:each="tempReceipt : ${receipts}">-->
-<!--                    <th th:text="${tempReceipt.id}" scope="row"><a href="#"></a></th>-->
-<!--                    <th scope="row"><a href="#" th:text="${tempReceipt.receiptCode}"></a></th>-->
-<!--                    <td th:text="${tempReceipt.swift_code}"></td>-->
-<!--                    <td th:text="${tempReceipt.remitterBank}"></td>-->
-<!--                    <td th:text="${tempReceipt.remitterAccount}"></td>-->
-<!--                    <td th:text="${tempReceipt.beneficiaryBank}"></td>-->
-<!--                    <td th:text="${tempReceipt.beneficiaryAccount}"></td>-->
-<!--                    <td th:text="${tempReceipt.amount}"></td>-->
-<!--                    <td th:text="${tempReceipt.currency}"></td>-->
-<!--                    &lt;!&ndash;                    <td><span class="badge bg-success">Approved</span></td>&ndash;&gt;-->
-<!--                    <td>-->
-<!--                     <span>-->
-<!--                        <div class="">-->
-<!--                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>-->
-<!--                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">-->
-<!--                          <li class="dropdown-header text-start">-->
-<!--                            <h6>Actions</h6>-->
-<!--                          </li>-->
-
-<!--                          <li><a class="dropdown-item" th:href="@{/get-receipt(id=${tempReceipt.id})}">Voir le recu</a></li>-->
-<!--                          <li><a class="dropdown-item" th:href="@{/update-receipt(id=${tempReceipt.id})}">Modifier le recu</a></li>-->
-<!--                          <li><a class="dropdown-item" th:href="@{/delete-receipt(id=${tempReceipt.id})}"  onclick="if (!(confirm('Voulez-vous vraiment supprimer ce client? Si vous cliquez sur ok vous ne pourrez plus revenir en arrierre'))) return false">Supprimer le recu</a></li>-->
-<!--                          <li><a class="dropdown-item" href="#">Annuler</a></li>-->
-<!--                        </ul>-->
-<!--                      </div>-->
-<!--                     </span>-->
-<!--                    </td>-->
-<!--                  </tr>-->
+                  <tr th:each="tempReceipt : ${receipts}">
+                    <!--                    <th th:text="${tempReceipt.id}" scope="row"><a href="#"></a></th>-->
+                    <th scope="row"><a href="#" th:text="${tempReceipt.receiptCode}"></a></th>
+                    <td th:text="${tempReceipt.society.societyName}"></td>
+                    <td th:text="${tempReceipt.beneficiary.beneficiaryName}"></td>
+                    <td th:text="${tempReceipt.beneficiaryBank}"></td>
+                    <td th:text="${tempReceipt.beneficiaryAccount}"></td>
+                    <td th:text="${tempReceipt.swift_code}"></td>
+                    <td th:text="${tempReceipt.amount}"></td>
+                    <td th:text="${tempReceipt.currency}"></td>
+                    <!--                    <td><span class="badge bg-success">Approved</span></td>-->
+                  </tr>
                   </tbody>
                 </table>
               </div>
