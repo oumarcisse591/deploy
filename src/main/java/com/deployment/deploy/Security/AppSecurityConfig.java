@@ -28,22 +28,24 @@ public class AppSecurityConfig {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/").hasRole("ADMIN")
+                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/add-user/**").hasRole("ADMIN")
+                                .requestMatchers("/add-receipt/**").hasRole("ADMIN")
                                 .requestMatchers("/delete-user/**").hasRole("ADMIN")
                                 .requestMatchers("/update-user/**").hasRole("ADMIN")
                                 .requestMatchers("/delete-client").hasRole("ADMIN")
                                 .requestMatchers("/update-receipt").hasRole("ADMIN")
-                                .requestMatchers("/delete-receipt").hasRole("ADMIN")
+                                .requestMatchers("/list-user").hasRole("ADMIN")
+                                .requestMatchers("/update-beneficiary").hasRole("ADMIN")
+                                .requestMatchers("/society").hasRole("ADMIN")
                                 .requestMatchers("/deleting-client-page").hasRole("ADMIN")
                                 .requestMatchers("/resources/**").permitAll()
                                 .anyRequest().authenticated()
-
                 )
                 .formLogin(form ->
                         form
                                 .loginPage("/authentification")
-                                .loginProcessingUrl("/authenticateTheUser")
+                                .loginProcessingUrl("/authenticateTheUser").defaultSuccessUrl("/", true)
                                 .permitAll()
 
                 )

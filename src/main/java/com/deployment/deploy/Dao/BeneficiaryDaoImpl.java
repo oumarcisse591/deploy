@@ -20,7 +20,7 @@ public class BeneficiaryDaoImpl implements BeneficiaryDao{
     }
     @Override
     public List<Beneficiary> findAllBeneficiary() {
-        TypedQuery<Beneficiary> theQuery = entityManager.createQuery("SELECT c FROM Beneficiary c ORDER BY c.id DESC", Beneficiary.class);
+        TypedQuery<Beneficiary> theQuery = entityManager.createQuery("SELECT c FROM Beneficiary c WHERE c.enabled = true ORDER BY c.id DESC", Beneficiary.class);
         return theQuery.getResultList();
     }
 
