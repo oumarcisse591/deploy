@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.*;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class ReportController {
 //    private ReportService reportService;
 
     @GetMapping("/reportPdf")
-    public ResponseEntity getReceiptReport(@RequestParam("id") int theId, Model theModel) throws JRException, FileNotFoundException {
+    public ResponseEntity getReceiptReport(@RequestParam("id") int theId, Model theModel) throws JRException, IOException {
         Receipt theReceipt = receiptDao.findReceiptById(theId);
         String ref = theReceipt.getReceiptCode();
         Date date = theReceipt.getReceiptDate();
@@ -65,9 +66,16 @@ public class ReportController {
         return new ResponseEntity<>(reportStream.toByteArray(), httpHeaders, HttpStatus.OK);
     }
 
-    public ByteArrayOutputStream generateReport(String receiptCode, Date date, String remitterName, String remitterAddress, String BeneficiaryName, String beneficiaryAddress, String beneficiaryBank, String beneficiaryBankAddress, String beneficiaryAccount, String swift, double amount, String currency, Date valueDate, String paymentReference) throws FileNotFoundException, JRException {
+    public ByteArrayOutputStream generateReport(String receiptCode, Date date, String remitterName, String remitterAddress, String BeneficiaryName, String beneficiaryAddress, String beneficiaryBank, String beneficiaryBankAddress, String beneficiaryAccount, String swift, double amount, String currency, Date valueDate, String paymentReference) throws IOException, JRException {
 //        File file = ResourceUtils.getFile("classpath:recu.jrxml");
-        File file = ResourceUtils.getFile("/opt/tomcat/webapps/ttapplication/WEB-INF/classes/recu.jrxml");
+
+        Resource resource = new ClassPathResource("recu.jrxml");
+
+        // Obtenir un objet File à partir de la ressource
+        File file = resource.getFile();
+
+
+//        File file = ResourceUtils.getFile("/opt/tomcat/webapps/ttapplication/WEB-INF/classes/recu.jrxml");
         File downloadsDirectory = new File(System.getProperty("user.home"), "Downloads");
         String path = downloadsDirectory.getAbsolutePath();
         Map<String,Object> parameters = new HashMap<>();
