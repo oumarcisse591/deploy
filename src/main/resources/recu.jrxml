@@ -29,7 +29,7 @@
                 <staticText>
                     <reportElement x="90" y="0" width="158" height="20" uuid="731c357c-a27e-4e40-b454-7d0ca7843dcf"/>
                     <textElement verticalAlignment="Middle">
-                        <font fontName="Arial" size="16"/>
+                        <font size="16"/>
                     </textElement>
                     <text><![CDATA[LAMEX-EXCHANGE]]></text>
                 </staticText>
