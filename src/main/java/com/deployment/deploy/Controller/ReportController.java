@@ -8,6 +8,8 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,13 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +32,12 @@ public class ReportController {
 
     @Autowired
     private ReceiptDao receiptDao;
+
+    private final ResourceLoader resourceLoader;
+
+    public ReportController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
 
 //    private ReportService reportService;
@@ -61,7 +67,9 @@ public class ReportController {
     }
 
     public ByteArrayOutputStream generateReport(String receiptCode, Date date, String remitterName, String remitterAddress, String BeneficiaryName, String beneficiaryAddress, String beneficiaryBank, String beneficiaryBankAddress, String beneficiaryAccount, String swift, double amount, String currency, Date valueDate, String paymentReference) throws FileNotFoundException, JRException {
-        File file = ResourceUtils.getFile("classpath:recu.jrxml");
+//        File file = ResourceUtils.getFile("classpath:recu.jrxml");
+        File file = new File(ResourceUtils.getURL("classpath:recu.jrxml").getFile());
+//        Resource file = resourceLoader.getResource("classpath:/recu.jrxml");
 //        String filePath = "classpath:recu.jrxml";
         File downloadsDirectory = new File(System.getProperty("user.home"), "Downloads");
         String path = downloadsDirectory.getAbsolutePath();
